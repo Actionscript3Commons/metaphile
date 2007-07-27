@@ -1,7 +1,6 @@
 package com.metaphile
 {
-	//import flash.display.DisplayObject;
-	//import mx.collections.ArrayCollection;
+	
 	import flash.utils.ByteArray;
 	
 	/**
@@ -14,7 +13,6 @@ package com.metaphile
 		function get subtitle():String;
 		function get author():String;
 		function get image():ByteArray;
-		function get url():String;
-		//function get items():ArrayCollection;
+		//function get url():String;
 	}
 }

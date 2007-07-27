@@ -15,7 +15,7 @@ package com.atellis.meta.id3.parsers
 			super(successor);
 		}
 		
-		override public function readFrame(id:String, bytes:ByteArray, version:Number = 2.3):Frame {
+		override public function readFrame(id:String, bytes:ByteArray, version:Number):Frame {
 			if(id=="TXXX" || id=="TXX") {
 				return readTXXXFrame(bytes, version);
 			} else { return successor.readFrame(id, bytes, version); }
@@ -23,7 +23,7 @@ package com.atellis.meta.id3.parsers
 		
 		private function readTXXXFrame( bytes:ByteArray, version:Number ):Frame {
 			var frame:TXXXFrame = new TXXXFrame();
-			var size:uint = bytes.readUnsignedInt();
+			var size:uint = ID3.readInt(bytes, version);
 			ParseLog.parsed(this, "size: {0} (+10)", size, bytes.position);
 			readFlags( frame, bytes, version );
 			if(frame.compression){

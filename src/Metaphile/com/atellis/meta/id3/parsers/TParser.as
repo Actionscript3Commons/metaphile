@@ -19,19 +19,19 @@ package com.atellis.meta.id3.parsers
 			setRelationships();
 		}
 		
-		override public function readFrame(id:String, bytes:ByteArray, version:Number = 2.3):Frame {
+		override public function readFrame(id:String, bytes:ByteArray, version:Number):Frame {
 			if(id.charAt(0)=="T") {
 				var type:uint = getFrameType(id, version);
-				if(type!=FrameTypes.UNKNOWN){
+				//if(type!=FrameTypes.UNKNOWN){
 					return readTFrame(type, bytes, version);
-				} else { return successor.readFrame(id, bytes, version); }
+				//} else { return successor.readFrame(id, bytes, version); }
 			} else { return successor.readFrame(id, bytes, version); }
 		}
 		
 		// parsing functions
 		
 		private function readTFrame(type:uint, bytes:ByteArray, version:Number):Frame {
-			var size:int = bytes.readInt();
+			var size:int = ID3.readInt(bytes, version);
 			ParseLog.parsed(this, "size: {0} (+10)", size, bytes.position);
 			var frame:TFrame = new TFrame( type );
 			readFlags( frame, bytes, version );
@@ -108,11 +108,14 @@ package com.atellis.meta.id3.parsers
 			var v:uint = 1; //handler.versionIndex;
 			switch(version){
 				case 2.2:
-					result = 0;
+					v = 0;
+					break;
 				case 2.3:
-					result = 1;
+					v = 1;
+					break;
 				case 2.4:
-					result = 2;
+					v = 2;
+					break;
 			}
 			var result:uint = FrameTypes.UNKNOWN;
 			for (var type:String in relationships){

@@ -20,7 +20,7 @@ package com.atellis.meta.id3.parsers
 			setRelationships();
 		}
 		
-		override public function readFrame(id:String, bytes:ByteArray, version:Number = 2.3):Frame {
+		override public function readFrame(id:String, bytes:ByteArray, version:Number):Frame {
 			if(id.charAt(0)=="W") {
 				var type:uint = getFrameType(id, version);
 				if(type!=FrameTypes.UNKNOWN){
@@ -30,7 +30,7 @@ package com.atellis.meta.id3.parsers
 		}
 		
 		private function readWFrame(type:uint, bytes:ByteArray, version:Number):Frame {
-			var size:int = bytes.readInt();
+			var size:int = ID3.readInt(bytes, version);
 			ParseLog.parsed(this, "size: {0} (+10)", size, bytes.position);
 			var frame:WFrame = new WFrame( type );
 			readFlags(frame, bytes, version);

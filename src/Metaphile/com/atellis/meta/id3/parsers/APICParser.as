@@ -16,7 +16,7 @@ package com.atellis.meta.id3.parsers
 			super(successor);
 		}
 		
-		override public function readFrame(id:String, bytes:ByteArray, version:Number = 2.3):Frame {
+		override public function readFrame(id:String, bytes:ByteArray, version:Number):Frame {
 			if(id=="APIC" || id=="PIC") {
 				return readAPICFrame(bytes, version);
 			} else { return successor.readFrame(id, bytes, version); }
@@ -24,7 +24,7 @@ package com.atellis.meta.id3.parsers
 		
 		private function readAPICFrame( bytes:ByteArray, version:Number ):Frame {
 			var frame:APICFrame = new APICFrame();
-			var size:int = bytes.readUnsignedInt();
+			var size:int = ID3.readInt(bytes, version);
 			ParseLog.parsed(this, "size: {0} (+10)", size, bytes.position);
 			var data:ByteArray = new ByteArray();
 			readFlags( frame, bytes, version );
@@ -35,7 +35,9 @@ package com.atellis.meta.id3.parsers
 			var start:uint = bytes.position;
 			frame.encoding = bytes.readUnsignedByte();
 			ParseLog.parsed(this, "encoding: {0}", frame.encoding, bytes.position);
-			frame.mime = ID3.readString(bytes, frame.encoding);
+			if(version > 2.2) {
+				frame.mime = ID3.readString(bytes, frame.encoding);
+			} else { frame.mime = bytes.readUTFBytes(3); }
 			ParseLog.parsed(this, "mime: {0}", frame.mime, bytes.position);
 			frame.format = bytes.readUnsignedByte();
 			ParseLog.parsed(this, "type: {0}", frame.format, bytes.position);

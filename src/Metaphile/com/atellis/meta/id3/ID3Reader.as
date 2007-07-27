@@ -126,7 +126,7 @@ package com.atellis.meta.id3
 						break;
 					}
 					ParseLog.parsed(this, "frame {0}", id, bytes.position);
-					tag.addFrame( parser.readFrame(id, bytes) );
+					tag.addFrame( parser.readFrame(id, bytes, tag.version) );
 				}
 				ParseLog.info(this, "#############################################################");
 			} else {

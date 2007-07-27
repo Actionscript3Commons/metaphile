@@ -8,6 +8,7 @@ package com.atellis.meta.id3.parsers
 	import flash.utils.IDataInput;
 	import mx.logging.*;
 	import com.metaphile.logging.ParseLog;
+	import com.atellis.meta.id3.utilities.ID3;
 	
 	public class FrameParser extends EventDispatcher
 	{
@@ -19,9 +20,9 @@ package com.atellis.meta.id3.parsers
 			_successor = successor;
 		}
 		
-		public function readFrame( id:String, bytes:ByteArray, version:Number = 2.3 ):Frame {
+		public function readFrame( id:String, bytes:ByteArray, version:Number ):Frame {
 			var frame:UnknownFrame = new UnknownFrame();
-			var size:int = bytes.readInt();
+			var size:int = ID3.readInt(bytes, version);
 			ParseLog.parsed(this, "size: {0} (+10)", size, bytes.position);
 			readFlags(frame, bytes, version);
 			bytes.position += size;

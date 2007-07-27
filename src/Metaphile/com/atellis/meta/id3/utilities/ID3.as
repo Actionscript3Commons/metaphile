@@ -17,6 +17,19 @@ package com.atellis.meta.id3.utilities
 			return (value & 127) + 128 * ((value >> 8) & 127) + 16384 * ((value >>16) & 127) + 2097152 * ((value >> 24) & 127);
 		}
 		
+		public static function readInt(stream:IDataInput, version:Number):uint {
+			switch(version) {
+				case 2.2:
+					var b1:int = stream.readUnsignedByte();
+					var b2:int = stream.readUnsignedByte();
+					var b3:int = stream.readUnsignedByte();
+					return (b1 << 16) | (b2 << 8) | b3;
+				default:
+					return stream.readInt();
+					break;
+			}
+		}
+		
 		public static function readString( bytes:IDataInput, encoding:int=0, limit:uint=uint.MAX_VALUE ):String {
 			var response:String = ""
 			switch(encoding){
