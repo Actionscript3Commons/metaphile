@@ -51,7 +51,12 @@ package com.atellis.meta.id3
 		}
 		
 		public function get url():String { return ""; }
-		public function get author():String { return ""; }
+		public function get author():String {
+			if(band) { return String(band); }
+			if(leadPerformer) { return String(leadPerformer); }
+			if(composers) { return String(composers); }
+			return null;
+		}
 		public function get image():ByteArray {
 			if(albumArt) { return albumArt.image; }
 			return null;
@@ -201,6 +206,12 @@ package com.atellis.meta.id3
 			_privateFrames = value;
 		}
 		
+		private var _leadPerformer:TFrame;
+		public function get leadPerformer():TFrame { return _leadPerformer; }
+		public function set leadPerformer(value:TFrame):void {
+			_leadPerformer = value;
+		}
+		
 		public function addFrame( frame:Frame ):void {
 			switch(frame.type) {
 				case FrameTypes.ALBUM_TITLE:
@@ -231,6 +242,9 @@ package com.atellis.meta.id3
 					break;
 				case FrameTypes.BAND:
 					band = TFrame(frame);
+					break;
+				case FrameTypes.LEAD_PERFORMER:
+					leadPerformer = TFrame(frame);
 					break;
 				case FrameTypes.COMPOSER:
 					composers = TFrame(frame);
