@@ -14,11 +14,9 @@ package com.atellis.meta.id3.frames
 	public class TFrame extends Frame
 	{
 		
-		
 		public function TFrame( type:uint, id:String=null ) {
 			this.type = type;
 		}
-		
 		
 		private var _type:uint = FrameTypes.UNKNOWN;
 		override public function get type():uint { return _type; }

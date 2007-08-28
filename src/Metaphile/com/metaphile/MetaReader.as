@@ -1,3 +1,16 @@
+/*********************************************************************************************************************************
+ 
+ Copyright (c) 2007 Metaphile Contributors
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy,
+ modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ 
+*********************************************************************************************************************************/
+
 package com.metaphile
 {
 	import flash.events.EventDispatcher;
@@ -19,10 +32,6 @@ package com.metaphile
 			_parser = value;
 		}
 		
-		/*
-		public var _fileTypes:Array = [];
-		public function get fileTypes():Array { return _fileTypes; }
-		*/
 		
 		private var _autoClose:Boolean;
 		public function get autoClose():Boolean { return _autoClose; }
@@ -31,6 +40,7 @@ package com.metaphile
 			parser.autoClose = _autoClose;
 		}
 		
+		
 		private var _autoLimit:int = -1;
 		public function get autoLimit():int { return _autoLimit; }
 		public function set autoLimit( value:int ):void {
@@ -38,12 +48,14 @@ package com.metaphile
 			parser.autoLimit = _autoLimit;
 		}
 		
+		
 		private var _onComplete:Function;
 		public function get onComplete():Function { return _onComplete; }
 		public function set onComplete(value:Function):void {
 			_onComplete = value;
 			parser.onComplete = _onComplete;
 		}
+		
 		
 		public function read(stream:IDataInput):void {
 			parser.read(stream);

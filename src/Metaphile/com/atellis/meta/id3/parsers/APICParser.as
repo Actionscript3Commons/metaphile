@@ -51,5 +51,20 @@ package com.atellis.meta.id3.parsers
 			return frame;
 		}
 		
+		override public function getSize(frame:Frame, version:Number):uint {
+			if(frame is APICFrame) {
+				var apic:APICFrame = frame as APICFrame;
+				switch(version) {
+					case 2.2:
+						return 3 + 3 + 1 + apic.mime.length + 2 + 1 + apic.description.length + 2 + apic.image.length;
+						break;
+					case 2.3:
+						return 4 + 4 + 1 + apic.mime.length + 2 + 1 + apic.description.length + 2 + apic.image.length;
+						break;
+				}
+			}
+			return 0;
+		}
+		
 	}
 }

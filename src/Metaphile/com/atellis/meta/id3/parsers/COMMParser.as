@@ -39,5 +39,21 @@ package com.atellis.meta.id3.parsers
 			ParseLog.parsed(this, "text: {0}", frame.text, bytes.position);
 			return frame;
 		}
+		
+		override public function getSize(frame:Frame, version:Number):uint {
+			if(frame is COMMFrame) {
+				var comm:COMMFrame = frame as COMMFrame;
+				switch(version) {
+					case 2.2:
+						return 3 + 3 + 1 + comm.language.length + 2 + comm.description.length + 2 + comm.text.length;
+						break;
+					case 2.3:
+						return 4 + 4 + 1 + comm.language.length + 2 + comm.description.length + 2 + comm.text.length;
+						break;
+				}
+			}
+			return 0;
+		}
+		
 	}
 }

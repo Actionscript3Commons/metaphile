@@ -12,9 +12,11 @@ package com.metaphile.logging
 		
 		public static function parsed( source:Object, msg:String, value:Object, position:Number ):void {
 			//var logger:ILogger = Log.getLogger(getQualifiedCategoryName(source));
-			msg = msg.replace(new RegExp("\\{0\\}", "g"), value.toString());
-			msg = "// " + padString(msg) + position;
-			parseLogger.info(msg);
+			if(DEBUG) {
+				msg = msg.replace(new RegExp("\\{0\\}", "g"), value.toString());
+				msg = "// " + padString(msg) + position;
+				parseLogger.info(msg);
+			}
 		}
 		
 		public static function info( source:Object, msg:String, ... rest ):void {

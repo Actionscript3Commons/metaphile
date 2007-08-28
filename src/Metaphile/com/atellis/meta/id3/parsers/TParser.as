@@ -6,6 +6,7 @@ package com.atellis.meta.id3.parsers
 	
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
+	import com.atellis.meta.id3.ID3Data;
 	
 	public class TParser extends FrameParser
 	{
@@ -124,6 +125,21 @@ package com.atellis.meta.id3.parsers
 				}
 			}
 			return result;
+		}
+		
+		override public function getSize(frame:Frame, version:Number):uint {
+			if(frame is TFrame) {
+				var tframe:TFrame = frame as TFrame;
+				switch(version) {
+					case 2.2:
+						return 3 + 3 + tframe.text.length + 2;
+						break;
+					case 2.3:
+						return 4 + 4 + tframe.text.length + 2;
+						break;
+				}
+			}
+			return 0;
 		}
 		
 	}

@@ -67,5 +67,9 @@ package com.atellis.meta.id3.parsers
 			return result;
 		}
 		
+		public function getSize(frame:Frame, version:Number):uint {
+			return 0;
+		}
+		
 	}
 }

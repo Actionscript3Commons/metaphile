@@ -12,7 +12,6 @@ package com.atellis.meta.id3.frames
 		
 		private var version:Number;
 		
-		
 		public function get type():uint { return FrameTypes.UNKNOWN; }
 		
 		private var _tagAlterPreservation:Boolean;
@@ -21,31 +20,31 @@ package com.atellis.meta.id3.frames
 			_tagAlterPreservation = value;
 		}
 		
-		public var _fileAlterPreservation:Boolean;
+		private var _fileAlterPreservation:Boolean;
 		public function get fileAlterPreservation():Boolean { return _fileAlterPreservation; }
 		public function set fileAlterPreservation( value:Boolean ):void {
 			_fileAlterPreservation = value;
 		}
 		
-		public var _readOnly:Boolean;
+		private var _readOnly:Boolean;
 		public function get readOnly():Boolean { return _readOnly; }
 		public function set readOnly( value:Boolean ):void {
 			_readOnly = value;
 		}
 		
-		public var _compression:Boolean;
+		private var _compression:Boolean;
 		public function get compression():Boolean { return _compression; }
 		public function set compression( value:Boolean ):void {
 			_compression = value;
 		}
 		
-		public var _encryption:Boolean;
+		private var _encryption:Boolean;
 		public function get encryption():Boolean { return _encryption; }
 		public function set encryption( value:Boolean ):void {
 			_encryption = value;
 		}
 		
-		public var _grouping:Boolean;
+		private var _grouping:Boolean;
 		public function get grouping():Boolean { return _grouping; }
 		public function set grouping( value:Boolean ):void {
 			_grouping = value;
