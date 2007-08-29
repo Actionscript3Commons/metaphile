@@ -42,8 +42,8 @@ package com.metaphile
 		 * Defines a callback function which is called when metadata has been returned from a parser.
 		 * The callback function must take IMetaData as it's first argument.
 		 */
-		function get onComplete():Function;
-		function set onComplete(value:Function):void;
+		function get onMetaData():Function;
+		function set onMetaData(value:Function):void;
 		/*
 		function get onRefuse():Function;
 		function set onRefuse(value:Function):void;

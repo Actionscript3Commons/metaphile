@@ -18,36 +18,16 @@ package com.metaphile.id3
 	//import com.metaphile.MetaEvent;
 	import flash.utils.Dictionary;
 	
-	public class ID3Reader extends EventDispatcher implements IMetaReader {
+	public class ID3Reader extends MetaReaderBase implements IMetaReader {
 		
 		private var tags:Dictionary = new Dictionary(false);
 		
-		private var _autoClose:Boolean;
-		public function get autoClose():Boolean { return _autoClose; }
-		public function set autoClose(value:Boolean):void {
-			_autoClose = value;
-		}
-		
-		private var _autoLimit:int = -1;
-		public function get autoLimit():int { return _autoLimit; }
-		public function set autoLimit(value:int):void {
-			_autoLimit = value;
-		}
-		
-		private var _onComplete:Function;
-		public function get onComplete():Function { return _onComplete; }
-		public function set onComplete(value:Function):void {
-			_onComplete = value;
-		}
+		private var headerSize:uint = 10;
 		/*
-		public function get fileTypes():Array {
-			return ["mp3"];
-		}
-		*/
 		public function get headerSize():uint {
 			return 10;
 		}
-		
+		*/
 		private var chain:Array = [FrameParser, PRIVParser, GEOBParser, IPLSParser, PCNTParser, POPMParser, APICParser, COMMParser, WXXXParser, WParser, TXXXParser, TParser];
 		private var parser:FrameParser;
 		
@@ -184,7 +164,7 @@ package com.metaphile.id3
 					if(autoClose && (stream as Object).hasOwnProperty("close")) {
 						(stream as Object).close();
 					}
-					onComplete(parseBody( bytes, tag ));
+					onMetaData(parseBody( bytes, tag ));
 				}
 			}
 		}

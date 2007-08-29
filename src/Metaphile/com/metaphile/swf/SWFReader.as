@@ -2,41 +2,18 @@ package com.metaphile.swf
 {
 	import flash.utils.IDataInput;
 	import com.metaphile.IMetaReader;
-	import com.metaphile.swf.utilities.BitReader;
+	import com.metaphile.utils.BitReader;
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-
-	public class SWFReader implements IMetaReader
+	import com.metaphile.MetaReaderBase;
+	import com.metaphile.utils.ByteUtil;
+	
+	public class SWFReader extends MetaReaderBase implements IMetaReader
 	{
-		public function get autoClose():Boolean
-		{
-			return false;
-		}
-		
-		public function set autoClose(value:Boolean):void
-		{
-		}
-		
-		public function get autoLimit():int
-		{
-			return -1;
-		}
-		
-		public function set autoLimit(value:int):void
-		{
-		}
-		
-		public function get onComplete():Function
-		{
-			return null;
-		}
-		
-		public function set onComplete(value:Function):void
-		{
-		}
 		
 		public function read(stream:IDataInput):void
 		{
+			
 			if( stream.bytesAvailable >= 100) {
 				//track("#","##","#");
 				stream.endian = Endian.LITTLE_ENDIAN;
@@ -47,7 +24,7 @@ package com.metaphile.swf
 					var size:uint = stream.readUnsignedInt(); // tag size in bytes (uncompressed)
 					
 					if(id=="CWS") {
-						stream = readBytes(stream);
+						stream = ByteUtil.readBytes(stream);
 						(stream as ByteArray).uncompress();
 						(stream as ByteArray).position = 0;
 					}
@@ -66,20 +43,6 @@ package com.metaphile.swf
 					var frames:uint = stream.readUnsignedShort();
 				}
 			}
-		}
-		
-		private function readBytes(stream:IDataInput):ByteArray {
-			var endian:String = stream.endian;
-			stream.endian = Endian.BIG_ENDIAN;
-			var bytes:ByteArray = new ByteArray();
-			while (stream.bytesAvailable > 3) {
-				bytes.writeUnsignedInt(stream.readUnsignedInt());
-			}
-			while(stream.bytesAvailable > 0) {
-				bytes.writeByte(stream.readUnsignedByte());
-			}
-			bytes.endian = endian;
-			return bytes;
 		}
 		
 	}

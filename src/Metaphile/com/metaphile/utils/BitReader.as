@@ -1,4 +1,4 @@
-package com.metaphile.swf.utilities
+package com.metaphile.utils
 {
 	import flash.utils.IDataInput;
 	

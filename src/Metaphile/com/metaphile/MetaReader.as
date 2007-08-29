@@ -49,27 +49,21 @@ package com.metaphile
 		}
 		
 		
-		private var _onComplete:Function;
-		public function get onComplete():Function { return _onComplete; }
-		public function set onComplete(value:Function):void {
-			_onComplete = value;
-			parser.onComplete = _onComplete;
+		private var _onMetaData:Function;
+		public function get onMetaData():Function { return _onMetaData; }
+		public function set onMetaData(value:Function):void {
+			_onMetaData = value;
+			parser.onMetaData = _onMetaData;
 		}
 		
 		
 		public function read(stream:IDataInput):void {
 			parser.read(stream);
 		}
-		/*
-		private function onComplete(meta:IMetaData):void {
-			var mse:MetaEvent = new MetaEvent(MetaEvent.META_DATA_COMPLETE);
-			mse.meta = meta;
-			dispatchEvent(mse);
-		}
-		*/
-		public function MetaReader( parser:IMetaReader, onComplete:Function ):void {
+		
+		public function MetaReader( parser:IMetaReader, onMetaData:Function ):void {
 			_parser = parser;
-			this.onComplete = onComplete;
+			this.onMetaData = onMetaData;
 		}
 		
 	}
