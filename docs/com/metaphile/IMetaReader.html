@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../print.css" type="text/css" media="print">
-<meta content="IMetaReader,com.metaphile.IMetaReader,autoClose,autoLimit,onComplete,read" name="keywords">
+<meta content="IMetaReader,com.metaphile.IMetaReader,autoClose,autoLimit,onMetaData,read" name="keywords">
 <title>com.metaphile.IMetaReader</title>
 </head>
 <body>
@@ -38,7 +38,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <td class="classHeaderTableLabel">Interface</td><td class="classSignature">public interface IMetaReader</td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Implementors</td><td><a href="../atellis/meta/id3/ID3Reader.html">ID3Reader</a>, <a href="../metaphile/MetaReader.html">MetaReader</a></td>
+<td class="classHeaderTableLabel">Implementors</td><td><a href="id3/ID3Reader.html">ID3Reader</a>, <a href="../metaphile/MetaReader.html">MetaReader</a>, <a href="mov/MOVReader.html">MOVReader</a>, <a href="swf/SWFReader.html">SWFReader</a></td>
 </tr>
 </table>
 <p></p>
@@ -55,15 +55,18 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#autoClose">autoClose</a> : Boolean<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#autoClose">autoClose</a> : Boolean<div class="summaryTableDescription">
+   Determines if a stream is automatically closed after parsing or if it is left open for further use.</div>
 </td><td class="summaryTableOwnerCol">IMetaReader</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#autoLimit">autoLimit</a> : int<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#autoLimit">autoLimit</a> : int<div class="summaryTableDescription">
+   Defines the maximum number of bytes to parse from a stream.</div>
 </td><td class="summaryTableOwnerCol">IMetaReader</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#onComplete">onComplete</a> : Function<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#onMetaData">onMetaData</a> : Function<div class="summaryTableDescription">
+   Defines a callback function which is called when metadata has been returned from a parser.</div>
 </td><td class="summaryTableOwnerCol">IMetaReader</td>
 </tr>
 </table>
@@ -79,7 +82,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="#read()">read</a>(stream:IDataInput):void</div>
-<div class="summaryTableDescription"></div>
+<div class="summaryTableDescription">
+   Parses an open stream for metadata.</div>
 </td><td class="summaryTableOwnerCol">IMetaReader</td>
 </tr>
 </table>
@@ -98,7 +102,9 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>autoClose:Boolean</code>&nbsp;&nbsp;[read-write]<span class="label">Implementation</span>
+<code>autoClose:Boolean</code>&nbsp;&nbsp;[read-write]<p>
+   Determines if a stream is automatically closed after parsing or if it is left open for further use.
+   </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get autoClose():Boolean</code>
 <br>
@@ -112,25 +118,33 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>autoLimit:int</code>&nbsp;&nbsp;[read-write]<span class="label">Implementation</span>
+<code>autoLimit:int</code>&nbsp;&nbsp;[read-write]<p>
+   Defines the maximum number of bytes to parse from a stream.
+   Some metadata formats store information at various points in a file. This limit will prevent the parser from loading large files which may have metadata at the end.
+   If autoClose is set to true, the stream will be closed after reaching this limit.
+   If any metadata has been retrieved before the limit was reached, onComplete will still be called.
+   </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get autoLimit():int</code>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function set autoLimit(value:int):void</code>
 <br>
 </div>
-<a name="onComplete"></a>
+<a name="onMetaData"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">onComplete</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">onMetaData</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>onComplete:Function</code>&nbsp;&nbsp;[read-write]<span class="label">Implementation</span>
+<code>onMetaData:Function</code>&nbsp;&nbsp;[read-write]<p>
+   Defines a callback function which is called when metadata has been returned from a parser.
+   The callback function must take IMetaData as it's first argument.
+   </p><span class="label">Implementation</span>
 <br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get onComplete():Function</code>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get onMetaData():Function</code>
 <br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set onComplete(value:Function):void</code>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set onMetaData(value:Function):void</code>
 <br>
 </div>
 <a name="methodDetail"></a>
@@ -142,7 +156,9 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function read(stream:IDataInput):void</code><span class="label">Parameters</span>
+<code>public function read(stream:IDataInput):void</code><p>
+   Parses an open stream for metadata.
+   </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">stream</span>:IDataInput</code></td>
